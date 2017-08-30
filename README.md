@@ -1,3 +1,3 @@
 # shellcodes
 
-A collection of shellcodes as educational and training purpose
+A collection of shellcodes for educational and training purpose
