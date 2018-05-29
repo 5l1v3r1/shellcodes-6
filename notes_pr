@@ -20,16 +20,16 @@ uid=0(root) gid=0(root) groups=0(root)
 /bin/sh
 id
 uid=0(root) gid=0(root) groups=0(root)
-ifconfig | grep inet
-        inet 10.0.1.14  netmask 255.255.255.0  broadcast 10.0.1.255
-        inet6 fe80::20c:29ff:fe9d:53c9  prefixlen 64  scopeid 0x20<link>
-        inet6 dead:beef::1  prefixlen 64  scopeid 0x0<global>
-        inet 127.0.0.1  netmask 255.0.0.0
-        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+
 ifconfig | grep inet6
         inet6 fe80::20c:29ff:fe9d:53c9  prefixlen 64  scopeid 0x20<link>
         inet6 dead:beef::1  prefixlen 64  scopeid 0x0<global>
         inet6 ::1  prefixlen 128  scopeid 0x10<host>
+
+netstat -antulp | grep 666
+tcp6       0      0 dead:beef::1:40278      dead:beef::2:666        ESTABLISHED 2185/./satan    
+
+
 
 msf exploit(multi/handler) > ifconfig
 [*] exec: ifconfig
